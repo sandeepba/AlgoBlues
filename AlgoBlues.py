@@ -22,7 +22,7 @@ def init_markov():
 	Key2 = MarkovChain("./markov2")
 	Key2.generateDatabase("g4 des8 c4. g8 bes8 r8 bes4. "+\
 	"g4 des8 c4. g8 bes8 r8 bes4. r2 r8 f8 fis8 g4")
-	
+	cu
 	Key3 = MarkovChain("./markov3")
 	Key3.generateDatabase("g4 des8 c4. g8 bes8 r8 bes4. "+\
 	"g4 des8 c4. g8 bes8 r8 bes4. r2 r8 f8 fis8 g4")
@@ -33,12 +33,12 @@ def init_markov():
 	
 	return {'I':Key1,'II':Key2,'III':Key3,'IV':Key4}
 	
+class Melody:
+	def __init__(self,markov_dict):
+		self.markov_dict = markov_dict
+	
 def main():
 	markov_dict = init_markov()
-	print markov_dict['I'].generateString()
-	print markov_dict['II'].generateString()
-	print markov_dict['III'].generateString()
-	print markov_dict['IV'].generateString()
-		
+	blues_melody = Melody(markov_dict)	
 	
 main()
