@@ -10,18 +10,31 @@ class Melody:
 		self.lily_string = ""
 	
 	def addMeasures(self,num_m,key_m):
-		new_measures = self.markov_dict[key_m].generateString()
-		self.lily_string += self.markov_dict[key_m].generateString()
+		new_measures = ""
+		long_enough = False
+		
+		#generate a string that is long enough 
+		while long_enough == False:
+			new_measures += self.markov_dict[key_m].generateString()+' '
+			if lily_length(new_measures) >= float(num_m):
+				long_enough = True
+			
+		#trim it down to the right size
+		while lily_length(new_measures)>2:
+			new_measures = new_measures.split()
+			new_measures.pop()
+			new_measures = ' '.join(new_measures)
+		
+		#add it to the master record	
+		self.lily_string += new_measures
 		print self.lily_string
 		print lily_length(self.lily_string)
 
 def lily_length(lily_notes):
 	note_lengths = []
-	for note in lily_notes.split(' '):
-		note_lengths.append(float(re.sub("\D", "", note)))
-				
-	print note_lengths
-	print sum([1/x for x in note_lengths])
+	for note in lily_notes.split():
+		note_lengths.append(float(re.sub("\D", "", note)))	
+	return sum([1/x for x in note_lengths])
 	
 def write_to_file(instrumentNotes,fileName):
 	print instrumentNotes['piano']
