@@ -28,8 +28,12 @@ class Melody:
 		#use rests to make up the difference
 		if lily_length(new_measures) < num_m:
 			beat_short = num_m - lily_length(new_measures)
+			print beat_short
 			correction = ' r' + str(int(1/beat_short))
+			print correction
 			new_measures += correction
+		
+		print ([new_measures,lily_length(new_measures)])
 		
 		#allow for continued concatenation
 		new_measures += '-end '
@@ -55,12 +59,14 @@ def lily_length(lily_notes):
 
 def init_markov():
 	Key1_intro = MarkovChain("./markov1intro")
-	Key1_intro.generateDatabase("g''4 des''8 c''4 g'8 bes'8 r4 bes'4. r2 "+\
-      "g''4 des''8 c''4 g'8 bes'8 r2 r8 f'8 fis'8 g'8 ")
+	Key1_intro.generateDatabase("g''4 des''8 c''4 g'8 bes'8 r4 bes'4. "+\
+      "g''4 des''8 c''4 g'8 bes'8 r8 f'8 fis'8 g'8 ")
 	
 	Key1 = MarkovChain("./markov1")
 	Key1.generateDatabase("f'4 bes'8 c''8 bes'8 g''8 des''8 "+\
-	"g'8 bes'4. r4 r8 g'8 r1 aes'8 f'8 bes'8")
+	"g'8 bes'4. r4 r8 g'8 r1 aes'8 f'8 bes'8 aes'8 des''8 bes'8 "+\
+	"ees''8 e''8 ees''8 des''8 bes'8 aes'8 f'8 des''4. bes4 des'''4."+\
+	 "bes''4 r4 g''4 des''8 c''4 g'8 bes'8 r4 bes'4.")
 	
 	Key1_finisher = MarkovChain("./markov1finisher")
 	Key1_finisher.generateDatabase("r8 e'''8 ees'''8 des'''8 bes''8 "+\
@@ -75,7 +81,7 @@ def init_markov():
 	"g'8 c''8 bes'4. r8 ")
 	
 	Key5 = MarkovChain("./markov5")
-	Key5.generateDatabase("f''4 f''8 fis''8 fis''8 g''4 a''8 bes''8 r8")
+	Key5.generateDatabase("f''4 f''8 fis''8 fis''8 g''4 a''8 bes''8 r8 ")
 	
 	return {'I-intro':Key1_intro,'I':Key1,'II':Key2,'IV':Key4,'V':Key5,
 	'I-finisher':Key1_finisher}
