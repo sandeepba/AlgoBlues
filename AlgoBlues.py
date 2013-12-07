@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import subprocess
+import re
 from pymarkovchain import MarkovChain
 
 class Melody:
@@ -9,9 +10,19 @@ class Melody:
 		self.lily_string = ""
 	
 	def addMeasures(self,num_m,key_m):
+		new_measures = self.markov_dict[key_m].generateString()
 		self.lily_string += self.markov_dict[key_m].generateString()
 		print self.lily_string
+		print lily_length(self.lily_string)
 
+def lily_length(lily_notes):
+	note_lengths = []
+	for note in lily_notes.split(' '):
+		note_lengths.append(float(re.sub("\D", "", note)))
+				
+	print note_lengths
+	print sum([1/x for x in note_lengths])
+	
 def write_to_file(instrumentNotes,fileName):
 	print instrumentNotes['piano']
 	subprocess.call('cp template1.ly '+fileName,shell=True)
