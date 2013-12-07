@@ -32,12 +32,10 @@ class Melody:
 			new_measures += correction
 		
 		#allow for continued concatenation
-		new_measures += ' '
+		new_measures += '-end '
 		
 		#add it to the master record	
 		self.lily_string += new_measures
-		print self.lily_string
-		print lily_length(self.lily_string)
 		
 	def outputFile(self,fileName):
 		subprocess.call('cp template1.ly '+fileName+'.ly',shell=True)
@@ -49,41 +47,50 @@ class Melody:
 
 def lily_length(lily_notes):
 	note_lengths = []
-	print lily_notes.split()
+	print lily_notes
 	for note in lily_notes.split():
 		print note
 		note_lengths.append(float(re.sub("\D", "", note)))	
 	return sum([1/x for x in note_lengths])
 
 def init_markov():
-	Key1 = MarkovChain("./markov1")
-	Key1.generateDatabase("g''4 des''8 c''4 g'8 bes'8 r4 bes'4. r2 "+\
+	Key1_intro = MarkovChain("./markov1intro")
+	Key1_intro.generateDatabase("g''4 des''8 c''4 g'8 bes'8 r4 bes'4. r2 "+\
       "g''4 des''8 c''4 g'8 bes'8 r2 r8 f'8 fis'8 g'8 ")
 	
-	Key2 = MarkovChain("./markov2")
-	Key2.generateDatabase("g4 des8 c4. g8 bes8 r8 bes4. "+\
-	"g4 des8 c4. g8 bes8 r8 bes4. r2 r8 f8 fis8 g4")
+	Key1 = MarkovChain("./markov1")
+	Key1.generateDatabase("f'4 bes'8 c''8 bes'8 g''8 des''8 "+\
+	"g'8 bes'4. r4 r8 g'8 r1 aes'8 f'8 bes'8")
 	
-	Key3 = MarkovChain("./markov3")
-	Key3.generateDatabase("g4 des8 c4. g8 bes8 r8 bes4. "+\
-	"g4 des8 c4. g8 bes8 r8 bes4. r2 r8 f8 fis8 g4")
+	Key1_finisher = MarkovChain("./markov1finisher")
+	Key1_finisher.generateDatabase("r8 e'''8 ees'''8 des'''8 bes''8 "+\
+	"aes''8 f''8 e''8 ees''8 des''8 bes'8 aes'8 des''8 bes'8 "+\
+	"aes'8 bes'8 ")
+	
+	Key2 = MarkovChain("./markov2")
+	Key2.generateDatabase(" c''8 c''8 des''8 des''8 ees''4 e''8 f''8")
 	
 	Key4 = MarkovChain("./markov4")
-	Key4.generateDatabase("g4 des8 c4. g8 bes8 r8 bes4. "+\
-	"g4 des8 c4. g8 bes8 r8 bes4. r2 r8 f8 fis8 g4")
+	Key4.generateDatabase("g'8 bes'8 c''8 bes'8 des''8 c''8 bes'8 "+\
+	"g'8 c''8 bes'4. r8 ")
 	
-	return {'I':Key1,'II':Key2,'III':Key3,'IV':Key4}
+	Key5 = MarkovChain("./markov5")
+	Key5.generateDatabase("f''4 f''8 fis''8 fis''8 g''4 a''8 bes''8 r8")
+	
+	return {'I-intro':Key1_intro,'I':Key1,'II':Key2,'IV':Key4,'V':Key5,
+	'I-finisher':Key1_finisher}
 			
 	
 def main():
 	markov_dict = init_markov()
 	blues_melody = Melody(markov_dict)		
+	blues_melody.addMeasures(4,'I-intro')
+	blues_melody.addMeasures(2,'IV')
+	blues_melody.addMeasures(2,'I')
+	blues_melody.addMeasures(1,'II')
+	blues_melody.addMeasures(1,'V')
+	blues_melody.addMeasures(2,'I-finisher')
 	blues_melody.addMeasures(4,'I')
-	blues_melody.addMeasures(2,'I')
-	blues_melody.addMeasures(2,'I')
-	blues_melody.addMeasures(1,'I')
-	blues_melody.addMeasures(1,'I')
-	blues_melody.addMeasures(2,'I')
-	blues_melody.outputFile('test1')
+	blues_melody.outputFile('test2')
 
 main()
