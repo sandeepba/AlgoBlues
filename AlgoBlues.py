@@ -64,9 +64,9 @@ def init_markov():
 	
 	Key1 = MarkovChain("./markov1")
 	Key1.generateDatabase("f'4 bes'8 c''8 bes'8 g''8 des''8 "+\
-	"g'8 bes'4. r4 r8 g'8 r1 aes'8 f'8 bes'8 aes'8 des''8 bes'8 "+\
+	"g'8 bes'4. r8 g'8 r1 aes'8 f'8 bes'8 aes'8 des''8 bes'8 "+\
 	"ees''8 e''8 ees''8 des''8 bes'8 aes'8 f'8 des''4. bes4 des'''4."+\
-	 "bes''4 r4 g''4 des''8 c''4 g'8 bes'8 r4 bes'4.")
+	 "bes''4 r8 g''4 des''8 c''4 g'8 bes'8 r8 bes'4.")
 	
 	Key1_finisher = MarkovChain("./markov1finisher")
 	Key1_finisher.generateDatabase("r8 e'''8 ees'''8 des'''8 bes''8 "+\
