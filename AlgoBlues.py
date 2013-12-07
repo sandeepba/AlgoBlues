@@ -53,7 +53,6 @@ def lily_length(lily_notes):
 	note_lengths = []
 	print lily_notes
 	for note in lily_notes.split():
-		print note
 		note_lengths.append(float(re.sub("\D", "", note)))	
 	return sum([1/x for x in note_lengths])
 
@@ -71,7 +70,9 @@ def init_markov():
 	Key1_finisher = MarkovChain("./markov1finisher")
 	Key1_finisher.generateDatabase("r8 e'''8 ees'''8 des'''8 bes''8 "+\
 	"aes''8 f''8 e''8 ees''8 des''8 bes'8 aes'8 des''8 bes'8 "+\
-	"aes'8 bes'8 ")
+	"aes'8 bes'8 r4 r8 e'''8 r8 ees'''8 ")
+	
+	Key1 
 	
 	Key2 = MarkovChain("./markov2")
 	Key2.generateDatabase(" c''8 c''8 des''8 des''8 ees''4 e''8 f''8")
@@ -83,8 +84,11 @@ def init_markov():
 	Key5 = MarkovChain("./markov5")
 	Key5.generateDatabase("f''4 f''8 fis''8 fis''8 g''4 a''8 bes''8 r8 ")
 	
+	
+	
 	return {'I-intro':Key1_intro,'I':Key1,'II':Key2,'IV':Key4,'V':Key5,
-	'I-finisher':Key1_finisher}
+	'I-finisher':Key1_finisher,'II-middle':Key6,'V-middle':Key7,
+	'I-middle':Key8}
 			
 	
 def main():
@@ -97,6 +101,11 @@ def main():
 	blues_melody.addMeasures(1,'V')
 	blues_melody.addMeasures(2,'I-finisher')
 	blues_melody.addMeasures(4,'I')
+	blues_melody.addMeasures(2,'IV')
+	blues_melody.addMeasures(2,'I')
+	blues_melody.addMeasures(1,'II-middle')
+	blues_melody.addMeasures(1,'V-middle')
+	blues_melody.addMeasures(2,'I-middle')
 	blues_melody.outputFile('test2')
 
 main()
