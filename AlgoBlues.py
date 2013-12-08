@@ -18,12 +18,13 @@ class Melody:
 			new_measures += self.markov_dict[key_m].generateString()+' '
 			if lily_length(new_measures) >= float(num_m):
 				long_enough = True
+		
 			
 		#trim it down to the right size
 		while lily_length(new_measures)> num_m:
 			new_measures = new_measures.split()
 			new_measures.pop()
-			new_measures = ' '.join(new_measures)
+			new_measures = ' '.join(new_measures)+' '
 			
 		#use rests to make up the difference
 		if lily_length(new_measures) < num_m:
@@ -58,37 +59,52 @@ def lily_length(lily_notes):
 
 def init_markov():
 	Key1_intro = MarkovChain("./markov1intro")
-	Key1_intro.generateDatabase("g''4 des''8 c''4 g'8 bes'8 r4 bes'4. "+\
-      "g''4 des''8 c''4 g'8 bes'8 r8 f'8 fis'8 g'8 ")
+	Key1_intro.generateDatabase("g''4 des''8 c''4 g'8 bes'8 r4 bes'4. r2"+\
+      " g''4 des''8 c''4 g'8 bes'8 r8 f'8 fis'8 g'8 r2 r4")
 	
 	Key1 = MarkovChain("./markov1")
 	Key1.generateDatabase("f'4 bes'8 c''8 bes'8 g''8 des''8 "+\
-	"g'8 bes'4. r8 g'8 r1 aes'8 f'8 bes'8 aes'8 des''8 bes'8 "+\
-	"ees''8 e''8 ees''8 des''8 bes'8 aes'8 f'8 des''4. bes4 des'''4."+\
-	 "bes''4 r8 g''4 des''8 c''4 g'8 bes'8 r8 bes'4.")
+	" g'8 bes'4. r8 g'8 r1 aes'8 f'8 bes'8 aes'8 des''8 bes'8 "+\
+	" ees''8 e''8 ees''8 des''8 bes'8 aes'8 f'8 des''4. bes4 des'''4."+\
+	 " bes''4 r8 g''4 des''8 c''4 g'8 bes'8 r8 bes'4.")
 	
 	Key1_finisher = MarkovChain("./markov1finisher")
 	Key1_finisher.generateDatabase("r8 e'''8 ees'''8 des'''8 bes''8 "+\
-	"aes''8 f''8 e''8 ees''8 des''8 bes'8 aes'8 des''8 bes'8 "+\
-	"aes'8 bes'8 r4 r8 e'''8 r8 ees'''8 ")
+	" aes''8 f''8 e''8 ees''8 des''8 bes'8 aes'8 des''8 bes'8 "+\
+	" aes'8 bes'8 r4 r8 e'''8 r8 ees'''8 ")
 	
-	Key1 
+	Key1_middle = MarkovChain("./markov1")
+	Key1_middle.generateDatabase("f'4 bes'8 c''8 bes'8 g''8 des''8 "+\
+	" g'8 bes'4. r8 g'8 r1 aes'8 f'8 bes'8 aes'8 des''8 bes'8 "+\
+	" ees''8 e''8 ees''8 des''8 bes'8 aes'8 f'8 des''4. bes4 des'''4."+\
+	 " bes''4 r8 g''4 des''8 c''4 g'8 bes'8 r8 bes'4.")
+	
+	Key1_ending= MarkovChain("./markov1finisher")
+	Key1_ending.generateDatabase("bes''4 bes''8 aes''8 f''8 e''8 ees''8" +\
+	" des''8 d''8 aes'8 a'8 bes'8 r2")
 	
 	Key2 = MarkovChain("./markov2")
 	Key2.generateDatabase(" c''8 c''8 des''8 des''8 ees''4 e''8 f''8")
 	
+	Key2_middle = MarkovChain("./markov2")
+	Key2_middle.generateDatabase(" c''8 c''8 des''8 des''8" +\
+	" ees''4 e''8 f''8")
+	
 	Key4 = MarkovChain("./markov4")
 	Key4.generateDatabase("g'8 bes'8 c''8 bes'8 des''8 c''8 bes'8 "+\
-	"g'8 c''8 bes'4. r8 ")
+	" g'8 c''8 bes'4. r8 ")
+	
+	Key5_middle = MarkovChain("./markov5")
+	Key5_middle.generateDatabase("f''8 ees''8 des''8 bes''8 r8 a''8"+\
+	 " bes''8 r8 bes'8 des''8 ees''8 e''8 r8 des''8 bes'8 aes'8 bes'4 ")
 	
 	Key5 = MarkovChain("./markov5")
-	Key5.generateDatabase("f''4 f''8 fis''8 fis''8 g''4 a''8 bes''8 r8 ")
-	
-	
+	Key5.generateDatabase("f''4 f''8 fis''8 fis''8" +\
+	" g''4 a''8 bes''8 r8 ")
 	
 	return {'I-intro':Key1_intro,'I':Key1,'II':Key2,'IV':Key4,'V':Key5,
-	'I-finisher':Key1_finisher,'II-middle':Key6,'V-middle':Key7,
-	'I-middle':Key8}
+	'I-finisher':Key1_finisher,'II-middle':Key2_middle,
+	'V-middle':Key5_middle,'I-middle':Key1_middle,'I-end':Key1_ending}
 			
 	
 def main():
@@ -106,6 +122,11 @@ def main():
 	blues_melody.addMeasures(1,'II-middle')
 	blues_melody.addMeasures(1,'V-middle')
 	blues_melody.addMeasures(2,'I-middle')
+	blues_melody.addMeasures(4,'I')
+	blues_melody.addMeasures(2,'IV')
+	blues_melody.addMeasures(2,'I')
+	blues_melody.addMeasures(1,'II')
+	blues_melody.addMeasures(1,'V')
+	blues_melody.addMeasures(2,'I-end')
 	blues_melody.outputFile('test2')
-
 main()

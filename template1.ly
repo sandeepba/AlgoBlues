@@ -12,13 +12,22 @@
       \set midiInstrument = #"Electric Grand Piano"
       \voiceTwo
       \new Chordnames {
-      <bes d f aes>\longa
+      <bes d f aes>\breve
+      <bes d f aes>\breve
       <ees g bes des>\breve
       <bes d f aes>\breve
       <c ees g bes>1
       <f a c ees>1
       <bes d f aes>\breve
-      <bes d f aes>\longa
+	<bes d f aes>\breve
+	<bes d f aes>\breve      
+	<ees g bes des>\breve
+      <bes d f aes>\breve
+      <c ees g bes>1
+      <f a c ees>1
+      <bes d f aes>\breve
+	<bes d f aes>\breve
+	<bes d f aes>\breve
       <ees g bes des>\breve
       <bes d f aes>\breve
       <c ees g bes>1
